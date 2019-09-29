@@ -11,6 +11,7 @@ public class Telegram extends TelegramLongPollingBot {
     private String _botUsername;
 
     public static void init() {
+        ApiContextInitializer.init();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
 
         try {
