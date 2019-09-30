@@ -1,5 +1,6 @@
 package API;
 
+import Keys.ApiKeys;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
@@ -37,12 +38,12 @@ public class Telegram extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "bitlevel_bot";
+        return ApiKeys.TelegramName;
     }
 
     @Override
     public String getBotToken() {
-        return "898484067:AAHA_yusTF3LHS-lwU8xpOYdgkpArMdQcY0";
+        return ApiKeys.TelegramAPI;
     }
 
     private void sendMsg(Message message, String text) {

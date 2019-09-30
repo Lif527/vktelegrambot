@@ -1,9 +1,6 @@
 import API.*;
 
-import Addons.Conversation;
-import Addons.Documents;
-import Addons.DocumentsViewer;
-import Addons.Help;
+import Addons.*;
 import Functions.IFunction;
 import Functions.IFunctionAttach;
 import com.petersamokhin.bots.sdk.clients.Group;
@@ -19,6 +16,7 @@ public class Bot {
         i.add(new Help());
         i.add(new Documents());
         i.add(new Conversation());
+        i.add(new Start());
 
         var i2 = new ArrayList<IFunctionAttach>();
         i2.add(new DocumentsViewer());

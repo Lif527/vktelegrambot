@@ -2,14 +2,15 @@ package API;
 
 import Functions.IFunction;
 import Functions.IFunctionAttach;
+import Keys.ApiKeys;
 import com.petersamokhin.bots.sdk.clients.Group;
 import com.petersamokhin.bots.sdk.objects.Message;
 
 import java.util.ArrayList;
 
 public class VK {
-    private static int groupID = 186802716;
-    private static String privateKey = "8e404285f78a50a5261221766acb4bf06e62f0a8fb971569b9aad2ca31e7ab875e6a521be98b98451fe81";
+    private static int groupID = ApiKeys.VKid;
+    private static String privateKey = ApiKeys.VKKey;
     private static Group group = new Group(groupID, privateKey);
 
     public static void init(ArrayList<IFunction> addons) {
