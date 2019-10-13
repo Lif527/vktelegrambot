@@ -1,6 +1,6 @@
 package Functions;
 
-public interface IFunction {
+public interface Function {
     public String getCommand();
     public String getText();
 }
