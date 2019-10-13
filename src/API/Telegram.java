@@ -1,6 +1,7 @@
 package API;
 
 import Keys.ApiKeys;
+import Debug.*;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
@@ -9,9 +10,15 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.io.Console;
+import java.util.Random;
+
 public class Telegram extends TelegramLongPollingBot {
-    private String _telegramToken;
-    private String _botUsername;
+    private String _adminId = "rivizoft";
+    private Random rnd = new Random();
+    private int number = rnd.nextInt(100);
+    private int count = 0;
+    private boolean isGame = false;
 
     public static void init() {
         ApiContextInitializer.init();
@@ -28,11 +35,27 @@ public class Telegram extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
 
-        if (message.getText().equals("test")) {
-            sendMsg(message, "done!");
+        //Debug.addAction(message.getContact().getUserID().toString(), message.getChatId().toString(), "Пришло сообщение")
+
+        if (!isGame) {
+            sendMsg(message, "Я загадал число от 1 до 100! Угадай его");
+            isGame = true;
+            return;
         }
-        else {
-            sendMsg(message, "lol");
+
+        count++;
+
+        if (isGame && Integer.parseInt(message.getText()) > number)
+            sendMsg(message, "Неправильно! Слишком много");
+
+        if (isGame && Integer.parseInt(message.getText()) < number)
+            sendMsg(message, "Неправильно! Слишком мало");
+
+        if (isGame && Integer.parseInt(message.getText()) == number) {
+            isGame = false;
+            sendMsg(message, "Правильно, это " + number);
+            sendMsg(message, "Кол-во попыток: " + count);
+            number = rnd.nextInt(100);
         }
     }
 
