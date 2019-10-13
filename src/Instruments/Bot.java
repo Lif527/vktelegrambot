@@ -1,3 +1,5 @@
+package Instruments;
+
 import API.*;
 
 public class Bot {

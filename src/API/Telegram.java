@@ -1,5 +1,6 @@
 package API;
 
+import Functions.Game;
 import Games.GuessTheNumber;
 import Keys.ApiKeys;
 import Debug.*;
@@ -12,10 +13,12 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.Console;
+import java.io.IOException;
 import java.util.Random;
 
 public class Telegram extends TelegramLongPollingBot {
     private String _adminId = "rivizoft";
+    Message message;
 
 
     public static void init() {
@@ -28,38 +31,25 @@ public class Telegram extends TelegramLongPollingBot {
             e.printStackTrace();
         }
     }
-
+    GuessTheNumber game = new GuessTheNumber();
     @Override
     public void onUpdateReceived(Update update) {
-        Message message = update.getMessage();
-
         //Debug.addAction(message.getContact().getUserID().toString(), message.getChatId().toString(), "Пришло сообщение")
-        sendMsg(message, message.getText());
-        if(message.getText() == "Хочу угадать") {
-            sendMsg(message, "Внимание! Пиши только числа, спасибо :)");
-            var game = new GuessTheNumber();
-            sendMsg(message, "Я загадал число от 1 до 100! Угадай его, /n" +
-                    "Если тебе вдруг надоест играть, ты сможешь всегда выйти, командой Выход, но я сильно огорчусь")
-        }
-        if (!isGame) {
+        message = update.getMessage();
 
-            isGame = true;
+        if(message.getText().equals("g") && !game.isPlaying()) {
+            game.startGame();
+            sendMsg(game.startedText());
             return;
         }
-
-        count++;
-
-        if (isGame && Integer.parseInt(message.getText()) > number)
-            sendMsg(message, "Неправильно! Слишком много");
-
-        if (isGame && Integer.parseInt(message.getText()) < number)
-            sendMsg(message, "Неправильно! Слишком мало");
-
-        if (isGame && Integer.parseInt(message.getText()) == number) {
-            isGame = false;
-            sendMsg(message, "Правильно, это " + number);
-            sendMsg(message, "Кол-во попыток: " + count);
-            number = rnd.nextInt(100);
+        else if(message.getText().equals("Выход")){
+            game = null;
+        }
+        if (game.isPlaying()) {
+            game.gameIteration(message.getText());
+            sendMsg(game.getAnswer());
+            if(!game.isPlaying())
+                game = null;
         }
     }
 
@@ -73,7 +63,7 @@ public class Telegram extends TelegramLongPollingBot {
         return ApiKeys.TelegramAPI;
     }
 
-    private void sendMsg(Message message, String text) {
+    public void sendMsg(String text) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(message.getChatId().toString());
