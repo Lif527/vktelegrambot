@@ -1,21 +1,26 @@
 package Core;
 
+import API.Telegram;
 import Functions.Function;
+import Functions.Game;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Core {
-    private ArrayList<Function> _addons;
-
-    public Core(ArrayList<Function> addons) {
-        _addons = addons;
-    }
+    private ArrayList<Game> gamesList;
+    private Telegram telegram;
 
     public Core() {
-        _addons = new ArrayList<Function>();
+        gamesList = new ArrayList<Game>();
+        telegram = new Telegram();
     }
 
-    public void addCommand(Function addon) {
-        _addons.add(addon);
+    public void addGames(ArrayList<Game> gamesList) {
+        this.gamesList = gamesList;
+    }
+
+    public ArrayList<Game> getGames() {
+        return gamesList;
     }
 }

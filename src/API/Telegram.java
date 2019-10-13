@@ -14,14 +14,16 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.Console;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Telegram extends TelegramLongPollingBot {
-    private String _adminId = "rivizoft";
     Message message;
+    private static ArrayList<Game> games;
+    private int actualGame;
+    private boolean gameStarted = false;
 
-
-    public static void init() {
+    public static void init(ArrayList<Game> gamesList) {
         ApiContextInitializer.init();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
 
@@ -30,26 +32,31 @@ public class Telegram extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+
+        games = gamesList;
     }
-    GuessTheNumber game = new GuessTheNumber();
+
     @Override
     public void onUpdateReceived(Update update) {
-        //Debug.addAction(message.getContact().getUserID().toString(), message.getChatId().toString(), "Пришло сообщение")
         message = update.getMessage();
 
-        if(message.getText().equals("g") && !game.isPlaying()) {
-            game.startGame();
-            sendMsg(game.startedText());
-            return;
+        if (!gameStarted) {
+            for (int i = 0; i < games.size(); i++) {
+                if (message.getText().equals(games.get(i).getStartCommand())) {
+                    sendMsg(games.get(i).getStartedText());
+                    actualGame = i;
+                    gameStarted = true;
+                }
+            }
         }
-        else if(message.getText().equals("Выход")){
-            game = null;
+
+        if (gameStarted && message.getText().equals("/exit")) {
+            gameStarted = false;
+            sendMsg(games.get(actualGame).exitGame());
         }
-        if (game.isPlaying()) {
-            game.gameIteration(message.getText());
-            sendMsg(game.getAnswer());
-            if(!game.isPlaying())
-                game = null;
+
+        if (gameStarted) {
+            sendMsg(games.get(actualGame).gameIteration(message.getText()));
         }
     }
 

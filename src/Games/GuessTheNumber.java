@@ -1,4 +1,5 @@
 package Games;
+
 import Functions.Game;
 import API.Telegram;
 import java.io.IOException;
@@ -11,62 +12,62 @@ public class GuessTheNumber implements Game {
     private final Random rnd;
     private int number;
     private int count;
-    private boolean playing;
     private String answer;
+    private int games;
+    private int scores;
 
     public GuessTheNumber(){
         rnd = new Random();
         number = rnd.nextInt(100);
-        playing = false;
         count = 0;
+        games = 0;
+        scores = 0;
     }
 
-    public String getNumber(){
-        return Integer.toString(number);
+    @Override
+    public String gameIteration(String text) {
+        var numberGot = Useful.tryParseInt(text);
+
+        if (numberGot != null) {
+            countIncrease();
+            if (Integer.parseInt(text) > number)
+                return "Неправильно! Слишком много";
+            else if (Integer.parseInt(text) < number)
+                return "Неправильно! Слишком мало";
+            else if (Integer.parseInt(text) == number) {
+                int prevNum = number;
+                number = rnd.nextInt(100);
+                games++;
+                scores += count / 2;
+                return "Правильно, это " + prevNum + "\n" + "Кол-во попыток: " + count +
+                        "\nТы набрал " + count / 2 + " очков\n" + "Я загадал новое число!";
+            }
+        }
+
+        return "Внимание! Пиши только числа :)";
     }
 
-    public String getAnswer(){
-        return answer;
+    @Override
+    public String getStartedText() {
+        return "Я загадал число от 1 до 100! Угадай его,\n" +
+                "чем меньше попыток у тебя будет, тем больше очков ты наберешь." +
+                "Чтобы выйти из игры введи: /exit";
+    }
+
+    @Override
+    public String getStartCommand() {
+        return "/start1";
+    }
+
+    @Override
+    public String exitGame() {
+        return "Ты завершил игру\n" +
+                "--Твоя статистика--\n" +
+                "Игр сыграно: " + games + "\n" +
+                "Набрано очков: " + scores;
     }
 
     public void countIncrease(){
         count++;
     }
-
-    @Override
-    public boolean isPlaying() {
-        return playing;
-    }
-
-    @Override
-    public void gameIteration(String text) {
-        var numberGot = Useful.tryParseInt(text);
-        if(numberGot != null) {
-            countIncrease();
-            if (Integer.parseInt(text) > number)
-                answer = "Неправильно! Слишком много";
-            else if (Integer.parseInt(text) < number)
-                answer = "Неправильно! Слишком мало";
-            else if (Integer.parseInt(text) == number) {
-                playing = false;
-                answer = "Правильно, это " + number + "\n" + "Кол-во попыток: " + count;
-                number = rnd.nextInt(100);
-            }
-        }
-        else answer = "Внимание! Пиши только числа, спасибо :)";
-    }
-
-    @Override
-    public String startedText() {
-        return "Я загадал число от 1 до 100! Угадай его,\n" +
-                "Если тебе вдруг надоест играть, ты сможешь всегда выйти,\n" +
-                "командой Выход, но я сильно огорчусь.\n" +
-                "Внимание! Пиши только числа, спасибо :)";
-    }
-
-    @Override
-    public void startGame() {
-        playing = true;
-    }
-
 }
