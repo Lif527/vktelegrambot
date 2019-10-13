@@ -1,5 +1,6 @@
 package API;
 
+import Games.GuessTheNumber;
 import Keys.ApiKeys;
 import Debug.*;
 import org.telegram.telegrambots.ApiContextInitializer;
@@ -15,10 +16,7 @@ import java.util.Random;
 
 public class Telegram extends TelegramLongPollingBot {
     private String _adminId = "rivizoft";
-    private Random rnd = new Random();
-    private int number = rnd.nextInt(100);
-    private int count = 0;
-    private boolean isGame = false;
+
 
     public static void init() {
         ApiContextInitializer.init();
@@ -36,9 +34,15 @@ public class Telegram extends TelegramLongPollingBot {
         Message message = update.getMessage();
 
         //Debug.addAction(message.getContact().getUserID().toString(), message.getChatId().toString(), "Пришло сообщение")
-
+        sendMsg(message, message.getText());
+        if(message.getText() == "Хочу угадать") {
+            sendMsg(message, "Внимание! Пиши только числа, спасибо :)");
+            var game = new GuessTheNumber();
+            sendMsg(message, "Я загадал число от 1 до 100! Угадай его, /n" +
+                    "Если тебе вдруг надоест играть, ты сможешь всегда выйти, командой Выход, но я сильно огорчусь")
+        }
         if (!isGame) {
-            sendMsg(message, "Я загадал число от 1 до 100! Угадай его");
+
             isGame = true;
             return;
         }
