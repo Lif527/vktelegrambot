@@ -1,4 +1,5 @@
 import API.*;
+import Core.Core;
 import Functions.Game;
 import Games.GuessTheNumber;
 
@@ -9,6 +10,8 @@ public class Bot {
         ArrayList<Game> games = new ArrayList<Game>();
         games.add(new GuessTheNumber());
 
-        Telegram.init(games);
+        Core core = new Core(games);
+
+        Telegram.init(core);
     }
 }

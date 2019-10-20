@@ -11,15 +11,14 @@ import java.util.Random;
 public class GuessTheNumber implements Game {
     private final Random rnd;
     private int number;
-    private int count;
-    private String answer;
+    private int countAttempts;
     private int games;
     private int scores;
 
     public GuessTheNumber(){
         rnd = new Random();
         number = rnd.nextInt(100);
-        count = 0;
+        countAttempts = 0;
         games = 0;
         scores = 0;
     }
@@ -29,18 +28,18 @@ public class GuessTheNumber implements Game {
         var numberGot = Useful.tryParseInt(text);
 
         if (numberGot != null) {
-            countIncrease();
-            if (Integer.parseInt(text) > number)
+            countAttempts++;
+            if (numberGot > number)
                 return "Неправильно! Слишком много";
-            else if (Integer.parseInt(text) < number)
+            else if (numberGot < number)
                 return "Неправильно! Слишком мало";
-            else if (Integer.parseInt(text) == number) {
+            else if (numberGot == number) {
                 int prevNum = number;
                 number = rnd.nextInt(100);
                 games++;
-                scores += count / 2;
-                return "Правильно, это " + prevNum + "\n" + "Кол-во попыток: " + count +
-                        "\nТы набрал " + count / 2 + " очков\n" + "Я загадал новое число!";
+                scores += countAttempts / 2;
+                return "Правильно, это " + prevNum + "\n" + "Кол-во попыток: " + countAttempts +
+                        "\nТы набрал " + countAttempts / 2 + " очков\n" + "Я загадал новое число!";
             }
         }
 
@@ -50,7 +49,7 @@ public class GuessTheNumber implements Game {
     @Override
     public String getStartedText() {
         return "Я загадал число от 1 до 100! Угадай его,\n" +
-                "чем меньше попыток у тебя будет, тем больше очков ты наберешь." +
+                "чем меньше попыток у тебя будет, тем больше очков ты наберешь. " +
                 "Чтобы выйти из игры введи: /exit";
     }
 
@@ -64,10 +63,6 @@ public class GuessTheNumber implements Game {
         return "Ты завершил игру\n" +
                 "--Твоя статистика--\n" +
                 "Игр сыграно: " + games + "\n" +
-                "Набрано очков: " + scores;
-    }
-
-    public void countIncrease(){
-        count++;
+                "Набрано очков: " + countAttempts;
     }
 }

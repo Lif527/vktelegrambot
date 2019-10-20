@@ -1,5 +1,6 @@
 package API;
 
+import Core.Core;
 import Functions.Game;
 import Games.GuessTheNumber;
 import Keys.ApiKeys;
@@ -18,46 +19,25 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Telegram extends TelegramLongPollingBot {
-    Message message;
-    private static ArrayList<Game> games;
-    private int actualGame;
-    private boolean gameStarted = false;
+    private Message message;
+    private static Core _core;
 
-    public static void init(ArrayList<Game> gamesList) {
+    public static void init(Core core) {
         ApiContextInitializer.init();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
+        _core = core;
 
         try {
             telegramBotsApi.registerBot(new Telegram());
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
-
-        games = gamesList;
     }
 
     @Override
     public void onUpdateReceived(Update update) {
         message = update.getMessage();
-
-        if (!gameStarted) {
-            for (int i = 0; i < games.size(); i++) {
-                if (message.getText().equals(games.get(i).getStartCommand())) {
-                    sendMsg(games.get(i).getStartedText());
-                    actualGame = i;
-                    gameStarted = true;
-                }
-            }
-        }
-
-        if (gameStarted && message.getText().equals("/exit")) {
-            gameStarted = false;
-            sendMsg(games.get(actualGame).exitGame());
-        }
-
-        if (gameStarted) {
-            sendMsg(games.get(actualGame).gameIteration(message.getText()));
-        }
+        sendMsg(_core.process(message));
     }
 
     @Override
