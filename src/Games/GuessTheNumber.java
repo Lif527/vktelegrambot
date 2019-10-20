@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.nio.file.*;
 
 import Instruments.Useful;
+import com.google.inject.internal.cglib.core.$CollectionUtils;
+
 import java.util.Random;
 
 public class GuessTheNumber implements Game {
@@ -35,11 +37,13 @@ public class GuessTheNumber implements Game {
                 return "Неправильно! Слишком мало";
             else if (numberGot == number) {
                 int prevNum = number;
+                int prevCountAttempts = countAttempts;
                 number = rnd.nextInt(100);
                 games++;
-                scores += countAttempts / 2;
-                return "Правильно, это " + prevNum + "\n" + "Кол-во попыток: " + countAttempts +
-                        "\nТы набрал " + countAttempts / 2 + " очков\n" + "Я загадал новое число!";
+                scores += getScores(prevCountAttempts);
+                countAttempts = 0;
+                return "Правильно, это " + prevNum + "\n" + "Кол-во попыток: " + prevCountAttempts +
+                        "\nТы набрал " + getScores(prevCountAttempts) + " очков\n" + "Я загадал новое число!";
             }
         }
 
@@ -63,6 +67,17 @@ public class GuessTheNumber implements Game {
         return "Ты завершил игру\n" +
                 "--Твоя статистика--\n" +
                 "Игр сыграно: " + games + "\n" +
-                "Набрано очков: " + countAttempts;
+                "Набрано очков: " + scores;
+    }
+
+    private int getScores(int count) {
+        if (count >= 4)
+            return 5;
+        else if (count >= 2 && count <= 4)
+            return 10;
+        else if (count == 1)
+            return 30;
+
+        return 0;
     }
 }
