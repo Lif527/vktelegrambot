@@ -5,4 +5,5 @@ public interface Game {
     public String getStartedText();
     public String getStartCommand();
     public String exitGame();
+    public int    getScores();
 }

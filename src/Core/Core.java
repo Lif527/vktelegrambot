@@ -7,38 +7,53 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Optional;
 
 public class Core {
-    private final ArrayList<Game> _games;
-    private final ArrayList<Function> _functions;
-    private boolean _gameStarted;
-    private int _actualGame;
+    private final HashMap<String, Game> _games;
+    private final HashMap<String, Function> _functions;
+    private final HashMap<Long, String> _actualSessions;
 
-    public Core(ArrayList<Game> games) {
+    private boolean _gameStarted;
+    private String _actualGame;
+
+    public Core(HashMap<String, Game> games) {
         _games = games;
         _gameStarted = false;
         _functions = null;
+        _actualSessions = new HashMap<>();
     }
 
-    public Core(ArrayList<Game> games, ArrayList<Function> functions) {
+    public Core(HashMap<String, Game> games, HashMap<String, Function> functions) {
         _games = games;
         _gameStarted = false;
         _functions = functions;
+        _actualSessions = new HashMap<>();
     }
 
     public String process(Message message) {
-        if (_functions != null )
-            for (int i = 0; i < _functions.size(); i++)
-                if (message.getText().equals(_functions.get(i).getCommand()))
-                    return _functions.get(i).getText();
+        // not implement
+        if (!_actualSessions.containsKey(message.getChatId())) {
+            _actualSessions.put(message.getChatId(), message.getText());
+        }
+        else {
+            _actualSessions.replace(message.getChatId(), message.getText());
+        }
 
+        // Если это вспомогательная функция
+        if (_functions != null) {
+            if (_functions.containsKey(message.getText()))
+                return _functions.get(message.getText()).getText();
+        }
+
+        // Если игрок хочет начать игру
         if (!_gameStarted) {
-            for (int i = 0; i < _games.size(); i++) {
-                if (message.getText().equals(_games.get(i).getStartCommand())) {
-                    _actualGame = i;
-                    _gameStarted = true;
-                    return _games.get(i).getStartedText();
-                }
+            if (_games.containsKey(message.getText())) {
+                _actualGame = message.getText();
+                _gameStarted = true;
+                return _games.get(message.getText()).getStartedText();
             }
         }
 
@@ -51,6 +66,6 @@ public class Core {
             return _games.get(_actualGame).gameIteration(message.getText());
         }
 
-        return "Not Found!";
+        return "404";
     }
 }

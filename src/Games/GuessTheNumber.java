@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.*;
 
 import Instruments.Useful;
+import Users.User;
 import com.google.inject.internal.cglib.core.$CollectionUtils;
 
 import java.util.Random;
@@ -70,8 +71,13 @@ public class GuessTheNumber implements Game {
                 "Набрано очков: " + scores;
     }
 
+    @Override
+    public int getScores() {
+        return 0;
+    }
+
     private int getScores(int count) {
-        if (count >= 4)
+        if (count > 4)
             return 5;
         else if (count >= 2 && count <= 4)
             return 10;

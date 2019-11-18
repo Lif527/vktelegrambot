@@ -6,16 +6,17 @@ import Functions.Game;
 import Games.GuessTheNumber;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Bot {
     public static void main(String[] args) {
         //games
-        ArrayList<Game> games = new ArrayList<Game>();
-        games.add(new GuessTheNumber());
+        HashMap<String, Game> games = new HashMap<>();
+        games.put("/start1", new GuessTheNumber());
 
         //functions
-        ArrayList<Function> functions = new ArrayList<>();
-        functions.add(new Help());
+        HashMap<String, Function> functions = new HashMap<>();
+        functions.put("/help", new Help());
 
         Core core = new Core(games, functions);
 
