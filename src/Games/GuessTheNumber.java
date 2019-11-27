@@ -66,14 +66,19 @@ public class GuessTheNumber implements Game {
     @Override
     public String exitGame() {
         return "Ты завершил игру\n" +
-                "--Твоя статистика--\n" +
+                "-- Твоя статистика --\n" +
                 "Игр сыграно: " + games + "\n" +
                 "Набрано очков: " + scores;
     }
 
     @Override
     public int getScores() {
-        return 0;
+        return scores;
+    }
+
+    @Override
+    public Game getCopyGame() {
+        return new GuessTheNumber();
     }
 
     private int getScores(int count) {

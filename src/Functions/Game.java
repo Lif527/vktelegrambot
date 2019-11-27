@@ -6,4 +6,5 @@ public interface Game {
     public String getStartCommand();
     public String exitGame();
     public int    getScores();
+    public Game   getCopyGame();
 }

@@ -3,11 +3,11 @@ package Users;
 import Functions.Game;
 
 public class User {
-    private String _name;
-    private int _scores;
-    private Long _chatID;
-    private Game _actualGame;
-    private String _lastMessage;
+    private String  _name;
+    private int     _scores;
+    private Long    _chatID;
+    private Game    _actualGame;
+    private String  _lastMessage;
 
     public boolean userInGame = false;
 
@@ -20,6 +20,10 @@ public class User {
 
     public void addScores(int scores) {
         _scores += scores;
+    }
+
+    public String getName() {
+        return _name;
     }
 
     public int getScores() {
@@ -40,5 +44,11 @@ public class User {
 
     public String getLastMessage() {
         return _lastMessage;
+    }
+
+    public String exitGame() {
+        var game = _actualGame;
+        _actualGame = null;
+        return game.exitGame();
     }
 }
