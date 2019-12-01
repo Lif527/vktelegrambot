@@ -20,12 +20,9 @@ public class Core {
     private final HashMap<Long, User>       _actualSessions;
 
     private Users _users;
-    private boolean _gameStarted;
-    private String _actualGame;
 
     public Core(HashMap<String, Game> games, Users users) {
         _games = games;
-        _gameStarted = false;
         _functions = null;
         _actualSessions = new HashMap<>();
         _users = users;
@@ -33,7 +30,6 @@ public class Core {
 
     public Core(HashMap<String, Game> games, HashMap<String, Function> functions, Users users) {
         _games = games;
-        _gameStarted = false;
         _functions = functions;
         _actualSessions = new HashMap<>();
         _users = users;

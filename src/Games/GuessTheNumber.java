@@ -58,6 +58,7 @@ public class GuessTheNumber implements Game {
                 "Чтобы выйти из игры введи: /exit";
     }
 
+
     @Override
     public String getStartCommand() {
         return "/start1";

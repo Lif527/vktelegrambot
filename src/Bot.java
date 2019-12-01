@@ -5,6 +5,7 @@ import Core.Core;
 import Functions.Function;
 import Functions.Game;
 import Games.GuessTheNumber;
+import Games.Score21;
 import Users.Users;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class Bot {
         //games
         HashMap<String, Game> games = new HashMap<>();
         games.put("/start1", new GuessTheNumber());
+        games.put("/start2", new Score21());
 
         //functions
         HashMap<String, Function> functions = new HashMap<>();

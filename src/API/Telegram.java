@@ -54,7 +54,7 @@ public class Telegram extends TelegramLongPollingBot {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(message.getChatId().toString());
-        sendMessage.setText(text);
+        sendMessage.setText(text.replaceAll("([_*`])", "\\\\$1"));
 
         try {
             execute(sendMessage);

@@ -10,7 +10,7 @@ public class Top implements Function {
     public Top(Users users)
     {
         _users = users;
-        countOfTop = 5;
+       countOfTop = 5;
     }
 
     @Override
@@ -20,12 +20,12 @@ public class Top implements Function {
 
     @Override
     public String getText() {
-        String message = "Кол-во игроков: " + _users.getCountUsers() + "\n\n";
+        String message = "Кол-во игроков: " + _users.getCountUsers() + "\n";
 
         for (int i = 0; i < _users.getCountUsers(); i++)
         {
             message += "" + (i+1) + ": " + _users.getAllUsers().get(i).getName() +
-                    " | Очков: " + _users.getAllUsers().get(i).getScores() + "\n";
+                    ", очков: " + _users.getAllUsers().get(i).getScores() + "\n";
         }
 
         return message;
