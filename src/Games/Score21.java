@@ -12,6 +12,7 @@ public class Score21 implements Game {
     private int sumPlayer;
     private Random rnd;
     private boolean first = true;
+    private boolean firstForBot = true;
 
     public Score21()
     {
@@ -33,31 +34,48 @@ public class Score21 implements Game {
         }
 
         if (text.equals("+")) {
-            int number = rnd.nextInt(11);
-            sumPlayer += number;
-            message += "Выпало число: " + number;
-            message += "\nСумма карт: " + sumPlayer;
-            if (sumPlayer > 21)
-            {
-                message += "\nСумма карт больше 21, вы проиграли :(\n" +
-                        "если хотите начать заного, напишите любое сообщение.\n" +
-                        "Вы заработали очков: " + score;
-                first = true;
-                return message;
-            }
-            if (sumPlayer == 21)
-            {
-                score += 3;
-                first = true;
-                message += "\nВы выиграли!" +
-                        "\n Вы заработали очков: " + score;
-                return message;
-            }
-            if (sumPlayer < 21)
-            {
-                message += "\nЕще?";
-                return message;
-            }
+            message = positiveAnswer();
+        }
+
+        if (text.equals("-")) {
+            message = negativeAnswer();
+        }
+
+        if (message.equals(""))
+            message += "Введите + или -";
+
+        return message;
+    }
+
+    private String negativeAnswer() {
+        String message = "Хорошо, теперь карты беру я.";
+
+        int firstNumber = rnd.nextInt(11);
+        int secondNumber = rnd.nextInt(11);
+        sumBot = firstNumber + secondNumber;
+        message += "\nМои карты: " + firstNumber + " и " + secondNumber;
+        message += "\nВсего: " + sumBot;
+        first = true;
+
+        if (sumBot > 21 || (sumBot < sumPlayer)) {
+            score += 3;
+            message += "\nЯ проиграл :(\n";
+            message += "\nТы заработал 3 очка";
+            return message;
+        }
+
+        if ((sumBot == 21 && sumPlayer == 21) || (sumBot == sumPlayer))
+        {
+            score += 1;
+            message += "\nНичья, ты заработал 1 очко";
+            return message;
+        }
+
+        if ((sumBot == 21 && sumPlayer < 21)
+                || (sumBot > sumPlayer))
+        {
+            message += "\nЯ выиграл!";
+            return message;
         }
 
         return message;
@@ -80,7 +98,7 @@ public class Score21 implements Game {
 
     @Override
     public String exitGame() {
-        return "Ты заработал " + score + " очков";
+        return "Всего очков набрано: " + score;
     }
 
     @Override
@@ -91,5 +109,41 @@ public class Score21 implements Game {
     @Override
     public Game getCopyGame() {
         return new Score21();
+    }
+
+    private String positiveAnswer()
+    {
+        String message = "";
+
+        int number = rnd.nextInt(11);
+        sumPlayer += number;
+        message += "Выпало число: " + number;
+        message += "\nСумма карт: " + sumPlayer;
+
+        if (sumPlayer > 21)
+        {
+            message += "\nСумма карт больше 21, вы проиграли :(\n" +
+                    "если хотите начать заного, напишите любое сообщение.\n" +
+                    "Вы заработали очков: " + score;
+            first = true;
+            return message;
+        }
+
+        if (sumPlayer == 21)
+        {
+            score += 3;
+            first = true;
+            message += "\nВы выиграли!" +
+                    "\n Вы заработали очков: " + score;
+            return message;
+        }
+
+        if (sumPlayer < 21)
+        {
+            message += "\nЕще?";
+            return message;
+        }
+
+        return message;
     }
 }

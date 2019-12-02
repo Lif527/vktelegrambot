@@ -2,6 +2,7 @@ package Addons;
 
 import Functions.Function;
 import Users.Users;
+import Users.User;
 
 public class Top implements Function {
     private Users _users;
@@ -19,7 +20,7 @@ public class Top implements Function {
     }
 
     @Override
-    public String getText() {
+    public String getText(User user) {
         String message = "Кол-во игроков: " + _users.getCountUsers() + "\n";
 
         for (int i = 0; i < _users.getCountUsers(); i++)

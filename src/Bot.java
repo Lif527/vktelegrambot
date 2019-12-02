@@ -1,5 +1,6 @@
 import API.*;
 import Addons.Help;
+import Addons.Stat;
 import Addons.Top;
 import Core.Core;
 import Functions.Function;
@@ -23,8 +24,9 @@ public class Bot {
 
         //functions
         HashMap<String, Function> functions = new HashMap<>();
-        functions.put("/help", new Help());
-        functions.put("/top", new Top(users));
+        functions.put("/help",  new Help());
+        functions.put("/top",   new Top(users));
+        functions.put("/stat",  new Stat());
 
         Core core = new Core(games, functions, users);
 

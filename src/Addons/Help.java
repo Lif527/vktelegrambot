@@ -1,6 +1,7 @@
 package Addons;
 
 import Functions.Function;
+import Users.User;
 
 public class Help implements Function {
 
@@ -10,7 +11,7 @@ public class Help implements Function {
     }
 
     @Override
-    public String getText() {
+    public String getText(User user) {
         return "Привет, я бот Бит. Со мной можно поиграть в разные игры: \n" +
                 "Набери /start1 и я с тобой сыграю в игру \"Угадай число\"\n" +
                 "Набери /start2 и я с тобой сыграю в игру \"21\"\n" +

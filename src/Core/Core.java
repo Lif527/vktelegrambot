@@ -51,7 +51,7 @@ public class Core {
 
         // Если пользователь просит функцию без ответа
         if (_functions.containsKey(currentUser.getLastMessage())) {
-            return _functions.get(currentUser.getLastMessage()).getText();
+            return _functions.get(currentUser.getLastMessage()).getText(currentUser);
         }
 
         // Если игрок хочет начать игру
