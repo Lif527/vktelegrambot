@@ -136,7 +136,7 @@ public class Math implements Game {
         }
 
         public void timerStop() {
-            task.cancel();
+            boolean cancel = task.cancel();
         }
     }
 }
