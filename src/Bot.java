@@ -6,11 +6,13 @@ import Core.Core;
 import Functions.Function;
 import Functions.Game;
 import Games.GuessTheNumber;
+import Games.Math;
 import Games.Score21;
 import Users.Users;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.function.Supplier;
 
 public class Bot {
     public static void main(String[] args) {
@@ -18,9 +20,10 @@ public class Bot {
         Users users = new Users();
 
         //games
-        HashMap<String, Game> games = new HashMap<>();
-        games.put("/start1", new GuessTheNumber());
-        games.put("/start2", new Score21());
+        HashMap<String, Supplier<Game>> games = new HashMap<>();
+        games.put("/start1", GuessTheNumber::new);
+        games.put("/start2", Score21::new);
+        games.put("/start3", Math::new);
 
         //functions
         HashMap<String, Function> functions = new HashMap<>();

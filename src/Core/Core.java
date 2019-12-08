@@ -13,22 +13,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class Core {
-    private final HashMap<String, Game>     _games;
+    private final HashMap<String, Supplier<Game>>     _games;
     private final HashMap<String, Function> _functions;
     private final HashMap<Long, User>       _actualSessions;
 
     private Users _users;
 
-    public Core(HashMap<String, Game> games, Users users) {
+    public Core(HashMap<String, Supplier<Game>> games, Users users) {
         _games = games;
         _functions = null;
         _actualSessions = new HashMap<>();
         _users = users;
     }
 
-    public Core(HashMap<String, Game> games, HashMap<String, Function> functions, Users users) {
+    public Core(HashMap<String, Supplier<Game>> games, HashMap<String, Function> functions, Users users) {
         _games = games;
         _functions = functions;
         _actualSessions = new HashMap<>();
@@ -58,7 +59,7 @@ public class Core {
         if (currentUser.getActualGame() == null &&
                 _games.containsKey(currentUser.getLastMessage()))
         {
-            var game = _games.get(currentUser.getLastMessage()).getCopyGame();
+            var game = _games.get(currentUser.getLastMessage()).get();
             currentUser.setActualGame(game);
             return currentUser.getActualGame().getStartedText();
         }
