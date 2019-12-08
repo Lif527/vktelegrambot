@@ -18,6 +18,14 @@ public class GuessTheNumberTest {
     }
 
     @Test
+    public void OnlyIntegers() {
+        var game = new GuessTheNumber();
+        var actual = game.gameIteration("Hello");
+        var expected = ("Внимание! Пиши только числа :)");
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
     public void FindAnswer(){
         var game = new GuessTheNumber();
         var guessed = -1;
@@ -27,7 +35,7 @@ public class GuessTheNumberTest {
 
         for(int i = 0; i < 101; i++){
             answer = game.gameIteration(Integer.toString(i));
-            if(answer != expected1 && answer != expected2){
+            if(!answer.equals(expected1) && !answer.equals(expected2)){
                 guessed = i;
                 break;
             }
