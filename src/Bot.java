@@ -1,4 +1,5 @@
 import API.*;
+import Addons.Admin;
 import Addons.Help;
 import Addons.Stat;
 import Addons.Top;
@@ -24,6 +25,7 @@ public class Bot {
         games.put("/start1", GuessTheNumber::new);
         games.put("/start2", Score21::new);
         games.put("/start3", Math::new);
+        games.put("/admin", Admin::new);
 
         //functions
         HashMap<String, Function> functions = new HashMap<>();

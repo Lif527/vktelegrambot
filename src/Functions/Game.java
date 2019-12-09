@@ -1,10 +1,11 @@
 package Functions;
 
+import Users.User;
+
 public interface Game {
-    public String gameIteration(String text);
-    public String getStartedText();
+    public String iteration(String text);
+    public String start(User user);
     public String getStartCommand();
-    public String exitGame();
+    public String exit();
     public int    getScores();
-    public Game   getCopyGame();
 }

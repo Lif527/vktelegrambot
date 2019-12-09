@@ -8,11 +8,11 @@ public class GuessTheNumberTest {
     @Test
     public void OutOfSection() {
         var game = new GuessTheNumber();
-        var actual = game.gameIteration("110");
+        var actual = game.iteration("110");
         var expected1 = ("Неправильно! Слишком много");
         Assert.assertEquals(expected1, actual);
 
-        actual = game.gameIteration("-1");
+        actual = game.iteration("-1");
         var expected2 = ("Неправильно! Слишком мало");
         Assert.assertEquals(expected2, actual);
     }
@@ -20,7 +20,7 @@ public class GuessTheNumberTest {
     @Test
     public void OnlyIntegers() {
         var game = new GuessTheNumber();
-        var actual = game.gameIteration("Hello");
+        var actual = game.iteration("Hello");
         var expected = ("Внимание! Пиши только числа :)");
         Assert.assertEquals(expected, actual);
     }
@@ -34,7 +34,7 @@ public class GuessTheNumberTest {
         var answer = "";
 
         for(int i = 0; i < 101; i++){
-            answer = game.gameIteration(Integer.toString(i));
+            answer = game.iteration(Integer.toString(i));
             if(!answer.equals(expected1) && !answer.equals(expected2)){
                 guessed = i;
                 break;

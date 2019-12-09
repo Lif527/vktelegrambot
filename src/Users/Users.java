@@ -25,9 +25,11 @@ public class Users {
         return _users.size();
     }
 
-    public User getUser(User user)
+    public User getUser(int number)
     {
-        return _users.get(_users.indexOf(user));
+        if (number < 0 || number >= _users.size())
+            return null;
+        return _users.get(number);
     }
 
     public ArrayList<User> getAllUsers() {

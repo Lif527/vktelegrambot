@@ -2,6 +2,7 @@ package Games;
 
 import Functions.Game;
 import Instruments.Useful;
+import Users.User;
 import org.glassfish.grizzly.nio.transport.UDPNIOServerConnection;
 
 import java.security.MessageDigest;
@@ -26,7 +27,7 @@ public class Math implements Game {
     }
 
     @Override
-    public String gameIteration(String text) {
+    public String iteration(String text) {
         Random rnd = new Random();
         char currentOperation = _operations[rnd.nextInt(_operations.length)];
         int max = 20;
@@ -91,7 +92,7 @@ public class Math implements Game {
     }
 
     @Override
-    public String getStartedText() {
+    public String start(User user) {
         return "Это математическая игра, в которой тебе на время нужно решать пример.\n" +
                 "На каждый пример у тебя будет 5 секунд!\n" +
                 "Если ты ГОТОВ, отправь любое сообщение.\n";
@@ -103,7 +104,7 @@ public class Math implements Game {
     }
 
     @Override
-    public String exitGame() {
+    public String exit() {
         return "Всего примеров: " + _countTasks + "\n" +
                 "Заработано очков: " + _score;
     }
@@ -111,11 +112,6 @@ public class Math implements Game {
     @Override
     public int getScores() {
         return _score;
-    }
-
-    @Override
-    public Game getCopyGame() {
-        return new Math();
     }
 
     private class GameTimer {

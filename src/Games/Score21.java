@@ -1,6 +1,7 @@
 package Games;
 
 import Functions.Game;
+import Users.User;
 
 import java.util.Random;
 
@@ -20,7 +21,7 @@ public class Score21 implements Game {
     }
 
     @Override
-    public String gameIteration(String text) {
+    public String iteration(String text) {
         String message = "";
 
         if (first) {
@@ -82,7 +83,7 @@ public class Score21 implements Game {
     }
 
     @Override
-    public String getStartedText() {
+    public String start(User user) {
         return "Добро пожаловать в игру 21 или ОЧКО!\n" +
                 "Правила просты: я даю тебе две карты. Твоя задача набрать 21 очко.\n" +
                 "Если ты набираешь 21 очко - ты выигрываешь, если больше - проигрываешь.\n" +
@@ -97,18 +98,13 @@ public class Score21 implements Game {
     }
 
     @Override
-    public String exitGame() {
+    public String exit() {
         return "Всего очков набрано: " + score;
     }
 
     @Override
     public int getScores() {
         return score;
-    }
-
-    @Override
-    public Game getCopyGame() {
-        return new Score21();
     }
 
     private String positiveAnswer()

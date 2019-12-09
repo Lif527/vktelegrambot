@@ -40,8 +40,13 @@ public class Core {
         User currentUser;
         if (!_actualSessions.containsKey(message.getChatId()))
         {
-            User usr = new User(message.getFrom().getFirstName(),
-                    message.getChatId(), null, message.getText());
+            User usr = new User(
+                    message.getFrom().getFirstName(),
+                    message.getChatId(),
+                    message.getFrom().getId(),
+                    null,
+                    message.getText()
+            );
             _actualSessions.put(message.getChatId(), usr);
             _users.addUser(usr);
         }
@@ -50,8 +55,9 @@ public class Core {
         currentUser = _actualSessions.get(message.getChatId());
         currentUser.setLastMessage(message.getText());
 
-        // Если пользователь просит функцию без ответа
-        if (_functions.containsKey(currentUser.getLastMessage())) {
+        // Если пользователь просит функцию без ответа и он не в игре
+        if (_functions.containsKey(currentUser.getLastMessage()) &&
+                currentUser.getActualGame() == null) {
             return _functions.get(currentUser.getLastMessage()).getText(currentUser);
         }
 
@@ -61,7 +67,7 @@ public class Core {
         {
             var game = _games.get(currentUser.getLastMessage()).get();
             currentUser.setActualGame(game);
-            return currentUser.getActualGame().getStartedText();
+            return currentUser.getActualGame().start(currentUser);
         }
 
         // Если игрок хочет выйти из игры
@@ -74,12 +80,13 @@ public class Core {
 
         // Если игрок в игре
         if (currentUser.getActualGame() != null) {
-            return currentUser.getActualGame().gameIteration(currentUser.getLastMessage());
+            return currentUser.getActualGame().iteration(currentUser.getLastMessage());
         }
 
         return "Привет, я бот Бит. Со мной можно поиграть в разные игры: \n" +
                 "Набери /start1 и я с тобой сыграю в игру \"Угадай число\"\n" +
                 "Набери /start2 и я с тобой сыграю в игру \"21\"\n" +
+                "Набери /start3 и я с тобой сыграю в Математическую игру\n" +
                 "/top - посмотреть ТОП игроков\n" +
                 "/stat - посмотреть свою статистику\n";
     }

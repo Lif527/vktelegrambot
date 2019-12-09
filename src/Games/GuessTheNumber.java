@@ -27,7 +27,7 @@ public class GuessTheNumber implements Game {
     }
 
     @Override
-    public String gameIteration(String text) {
+    public String iteration(String text) {
         var numberGot = Useful.tryParseInt(text);
 
         if (numberGot != null) {
@@ -52,7 +52,7 @@ public class GuessTheNumber implements Game {
     }
 
     @Override
-    public String getStartedText() {
+    public String start(User user) {
         return "Я загадал число от 1 до 100! Угадай его,\n" +
                 "чем меньше попыток у тебя будет, тем больше очков ты наберешь. " +
                 "Чтобы выйти из игры введи: /exit";
@@ -65,7 +65,7 @@ public class GuessTheNumber implements Game {
     }
 
     @Override
-    public String exitGame() {
+    public String exit() {
         return "Ты завершил игру\n" +
                 "-- Твоя статистика --\n" +
                 "Игр сыграно: " + games + "\n" +
@@ -75,11 +75,6 @@ public class GuessTheNumber implements Game {
     @Override
     public int getScores() {
         return scores;
-    }
-
-    @Override
-    public Game getCopyGame() {
-        return new GuessTheNumber();
     }
 
     private int getScores(int count) {

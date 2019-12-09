@@ -12,7 +12,7 @@ public class Help implements Function {
 
     @Override
     public String getText(User user) {
-        return "Привет, я бот Бит. Со мной можно поиграть в разные игры: \n" +
+        return "Привет, " + user.getName() + ". Я бот Бит. Со мной можно поиграть в разные игры: \n" +
                 "Набери /start1 и я с тобой сыграю в игру \"Угадай число\"\n" +
                 "Набери /start2 и я с тобой сыграю в игру \"21\"\n" +
                 "Набери /start3 и я с тобой сыграю в математическую игру\n" +
