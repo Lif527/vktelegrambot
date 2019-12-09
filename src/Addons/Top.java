@@ -41,12 +41,6 @@ public class Top implements Function {
 
     private void sortUsers()
     {
-        _sortedUsers.sort(new Comparator<User>() {
-            @Override
-            public int compare(User u1, User u2) {
-                return Integer.compare(u1.getScores(), u2.getScores());
-            }
-        });
-        Collections.reverse(_sortedUsers);
+        _sortedUsers.sort(Comparator.comparing(user -> user.getScores(), Comparator.reverseOrder()));
     }
 }

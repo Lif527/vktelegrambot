@@ -8,7 +8,6 @@ public class Score21Test {
     @Test
     public void OnlyYes() {
         var game = new Score21();
-        var actual = false;
         var actualAnswer = game.iteration("Hello").substring(0,17);
         Assert.assertEquals("Первые две карты:", actualAnswer);
 
@@ -21,7 +20,6 @@ public class Score21Test {
             var words = game.iteration("+").split(" ");
             checker = words.length;
         }
-        if(counter < 21) actual = true;
-        Assert.assertEquals(true, actual);
+        Assert.assertEquals(true, counter < 21);
     }
 }
