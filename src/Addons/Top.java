@@ -9,15 +9,13 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class Top implements Function {
-    private Users _users;
     private int countOfTop;
     private ArrayList<User> _sortedUsers;
 
     public Top(Users users)
     {
-        _users = users;
        countOfTop = 10;
-        _sortedUsers = _users.getAllUsers();
+        _sortedUsers = Users.getAllUsers();
     }
 
     @Override
@@ -28,7 +26,7 @@ public class Top implements Function {
     @Override
     public String getText(User user) {
         sortUsers();
-        String message = "Кол-во игроков: " + _users.getCountUsers() + "\n";
+        String message = "Кол-во игроков: " + Users.getCountUsers() + "\n";
 
         for (int i = 0; i < _sortedUsers.size(); i++)
         {

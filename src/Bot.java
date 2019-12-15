@@ -33,7 +33,7 @@ public class Bot {
         functions.put("/top",   new Top(users));
         functions.put("/stat",  new Stat());
 
-        Core core = new Core(games, functions, users);
+        Core core = new Core(games, functions);
 
         Telegram.init(core);
     }

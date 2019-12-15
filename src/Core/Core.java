@@ -20,20 +20,16 @@ public class Core {
     private final HashMap<String, Function> _functions;
     private final HashMap<Long, User>       _actualSessions;
 
-    private Users _users;
-
-    public Core(HashMap<String, Supplier<Game>> games, Users users) {
+    public Core(HashMap<String, Supplier<Game>> games) {
         _games = games;
         _functions = null;
         _actualSessions = new HashMap<>();
-        _users = users;
     }
 
-    public Core(HashMap<String, Supplier<Game>> games, HashMap<String, Function> functions, Users users) {
+    public Core(HashMap<String, Supplier<Game>> games, HashMap<String, Function> functions) {
         _games = games;
         _functions = functions;
         _actualSessions = new HashMap<>();
-        _users = users;
     }
 
     public String process(Message message) {
@@ -48,7 +44,7 @@ public class Core {
                     message.getText()
             );
             _actualSessions.put(message.getChatId(), usr);
-            _users.addUser(usr);
+            Users.addUser(usr);
         }
 
         //Идентифицируем нашего пользователя
