@@ -1,13 +1,13 @@
 package Games;
 
-import Functions.Game;
+import Functions.Iterationable;
 import Users.User;
 
 import java.util.Random;
 
 //Карты - 6 7 8 9 10
 // Валет - 2, Дама - 3, Король - 4, Туз - 11
-public class Score21 implements Game {
+public class Score21 implements Iterationable {
     private int score = 0;
     private int sumBot;
     private int sumPlayer;

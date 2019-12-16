@@ -2,7 +2,7 @@ package Core;
 
 import API.Telegram;
 import Functions.Function;
-import Functions.Game;
+import Functions.Iterationable;
 import Games.GuessTheNumber;
 import Users.User;
 import Users.Users;
@@ -16,17 +16,17 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 public class Core {
-    private final HashMap<String, Supplier<Game>>     _games;
+    private final HashMap<String, Supplier<Iterationable>> _games;
     private final HashMap<String, Function> _functions;
     private final HashMap<Long, User>       _actualSessions;
 
-    public Core(HashMap<String, Supplier<Game>> games) {
+    public Core(HashMap<String, Supplier<Iterationable>> games) {
         _games = games;
         _functions = null;
         _actualSessions = new HashMap<>();
     }
 
-    public Core(HashMap<String, Supplier<Game>> games, HashMap<String, Function> functions) {
+    public Core(HashMap<String, Supplier<Iterationable>> games, HashMap<String, Function> functions) {
         _games = games;
         _functions = functions;
         _actualSessions = new HashMap<>();

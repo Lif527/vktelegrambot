@@ -5,7 +5,7 @@ import Addons.Stat;
 import Addons.Top;
 import Core.Core;
 import Functions.Function;
-import Functions.Game;
+import Functions.Iterationable;
 import Games.GuessTheNumber;
 import Games.Math;
 import Games.Score21;
@@ -21,7 +21,7 @@ public class Bot {
         Users users = new Users();
 
         //games
-        HashMap<String, Supplier<Game>> games = new HashMap<>();
+        HashMap<String, Supplier<Iterationable>> games = new HashMap<>();
         games.put("/start1", GuessTheNumber::new);
         games.put("/start2", Score21::new);
         games.put("/start3", Math::new);

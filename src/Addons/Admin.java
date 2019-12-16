@@ -1,11 +1,11 @@
 package Addons;
 
-import Functions.Game;
+import Functions.Iterationable;
 import Instruments.Useful;
 import Users.User;
 import Users.Users;
 
-public class Admin implements Game {
+public class Admin implements Iterationable {
     private Integer _adminId;
 
     public Admin()

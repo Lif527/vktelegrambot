@@ -1,7 +1,7 @@
 package API;
 
 import Core.Core;
-import Functions.Game;
+import Functions.Iterationable;
 import Games.GuessTheNumber;
 import Keys.ApiKeys;
 import Debug.*;

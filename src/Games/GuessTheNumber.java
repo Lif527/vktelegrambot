@@ -1,6 +1,6 @@
 package Games;
 
-import Functions.Game;
+import Functions.Iterationable;
 import API.Telegram;
 import java.io.IOException;
 import java.nio.file.*;
@@ -11,7 +11,7 @@ import com.google.inject.internal.cglib.core.$CollectionUtils;
 
 import java.util.Random;
 
-public class GuessTheNumber implements Game {
+public class GuessTheNumber implements Iterationable {
     private final Random rnd;
     private int number;
     private int countAttempts;

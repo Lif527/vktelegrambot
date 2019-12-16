@@ -1,6 +1,6 @@
 package Games;
 
-import Functions.Game;
+import Functions.Iterationable;
 import Instruments.Useful;
 import Users.User;
 import org.glassfish.grizzly.nio.transport.UDPNIOServerConnection;
@@ -9,7 +9,7 @@ import java.security.MessageDigest;
 import java.sql.Time;
 import java.util.*;
 
-public class Math implements Game {
+public class Math implements Iterationable {
     private int _score;
     private int _countTasks;
     private char[] _operations;

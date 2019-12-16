@@ -1,18 +1,18 @@
 package Users;
 
-import Functions.Game;
+import Functions.Iterationable;
 
 public class User {
     private String  _name;
     private int     _scores;
     private Long    _chatID;
-    private Game    _actualGame;
+    private Iterationable    _actualGame;
     private String  _lastMessage;
     private Integer _id;
 
     public boolean userInGame = false;
 
-    public User(String name, Long chatID, Integer id, Game actualGame, String message) {
+    public User(String name, Long chatID, Integer id, Iterationable actualGame, String message) {
         _name = name;
         _scores = 0;
         _chatID = chatID;
@@ -42,11 +42,11 @@ public class User {
         return _scores;
     }
 
-    public Game getActualGame() {
+    public Iterationable getActualGame() {
         return _actualGame;
     }
 
-    public void setActualGame(Game game) {
+    public void setActualGame(Iterationable game) {
         _actualGame = game;
     }
 
